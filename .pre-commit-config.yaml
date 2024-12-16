@@ -4,7 +4,7 @@ repos:
       - id: trufflehog
         name: Trufflehog Secrets Scan
         always_run: true
-        entry: trufflehog filesystem .
+        entry: trufflehog filesystem . --fail
         language: system
         pass_filenames: true
   - repo: https://github.com/pre-commit/mirrors-prettier
