@@ -1,5 +1,5 @@
 - name: Create Ansible User
-  hosts: homelab
+  hosts: all-homelab
   gather_facts: false
   become: true
   tasks:
