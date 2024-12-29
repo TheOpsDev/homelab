@@ -1,0 +1,20 @@
+local-homelab:
+  hosts:
+    homelab-main.shared
+
+remote-homelab:
+  hosts:
+    homelab-main.theops.dev
+
+test:
+  children:
+    local-homelab
+
+prod:
+  children:
+    remote-homelab
+
+all-homelab:
+  children:
+    test:
+    prod:
