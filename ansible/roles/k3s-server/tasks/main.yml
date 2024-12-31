@@ -1,0 +1,6 @@
+---
+- name: Retrieve K3s Installation Script
+  ansible.builtin.uri:
+    url: https://get.k3s.io
+    dest: /tmp/ansible/setup_k3s.sh
+    mode: "0755"

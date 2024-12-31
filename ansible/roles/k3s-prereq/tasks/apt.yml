@@ -1,0 +1,4 @@
+---
+- name: Apt Upgrade Caches
+  ansible.builtin.apt:
+    update_cache: true

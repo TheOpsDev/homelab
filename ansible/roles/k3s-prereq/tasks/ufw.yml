@@ -1,0 +1,5 @@
+---
+- name: Disable UFW
+  community.general.ufw:
+    state: disabled
+  when: system_ufw_disable

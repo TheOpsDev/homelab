@@ -1,6 +1,7 @@
+---
 local-homelab:
   hosts:
-    homelab-main.shared
+    homelab-main
 
 remote-homelab:
   hosts:

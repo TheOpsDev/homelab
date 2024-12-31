@@ -1,0 +1,2 @@
+^opentofu/cloudflare/.terraform/*
+.git/*

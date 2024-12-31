@@ -1,0 +1,39 @@
+---
+- name: Disable Root Login
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^#PermitRootLogin"
+    line: "PermitRootLogin no"
+    state: present
+
+- name: Disable Password SSH Access
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^#PasswordAuthentication"
+    line: "PasswordAuthentication no"
+    state: present
+
+- name: Set Max Session Limit
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^#MaxSessions"
+    line: "MaxSessions {{ ssh_max_sessions }}"
+    state: present
+
+- name: Prevent Passwordless Logon
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^#PermitEmptyPasswords"
+    line: "PermitEmptyPasswords no"
+    state: present
+
+- name: Change SSH Port
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^#Port 22"
+    line: "Port {{ ssh_port }}"
+
+- name: Restart SSHd
+  ansible.builtin.systemd_service:
+    name: ssh.service
+    state: restarted

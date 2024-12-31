@@ -1,0 +1,5 @@
+system_timezone: US/Pacific
+system_ufw_disable: false
+
+ssh_port: 22
+ssh_max_sessions: 2

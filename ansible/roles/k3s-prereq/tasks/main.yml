@@ -1,0 +1,7 @@
+---
+- name: Configure UFW
+  ansible.builtin.include_tasks: ufw.yml
+- name: Execute Apt Commands
+  ansible.builtin.include_tasks: apt.yml
+- name: Apply Secure SSHd Config
+  ansible.builtin.include_tasks: sshd.yml

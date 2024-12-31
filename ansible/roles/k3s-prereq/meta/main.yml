@@ -1,0 +1,17 @@
+galaxy_info:
+  author: Chris Herrera
+  description: Homelab k3s
+  company: TheOpsDev
+  license: MIT
+  min_ansible_version: "2.1"
+
+argument_specs:
+  main:
+    short_description: Prerequisites
+    options:
+      system_timezone:
+        description: Timezone to configure on nodes
+      ssh_port:
+        description: sshd_config port
+      ssh_max_sessions:
+        description: sshd_config max sessions per user
