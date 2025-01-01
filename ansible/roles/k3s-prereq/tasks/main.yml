@@ -5,3 +5,5 @@
   ansible.builtin.include_tasks: apt.yml
 - name: Apply Secure SSHd Config
   ansible.builtin.include_tasks: sshd.yml
+- name: Download K3s Binary
+  ansible.builtin.include_tasks: download.yml

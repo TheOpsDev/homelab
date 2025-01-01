@@ -1,0 +1,12 @@
+---
+- name: Install and Setup K3s Server
+  hosts: test
+  gather_facts: true
+  become: true
+  tasks:
+    - name: Prep K3s Server
+      ansible.builtin.include_role:
+        name: k3s-prereq
+    - name: Configure K3s Server
+      ansible.builtin.include_role:
+        name: k3s-server
