@@ -3,7 +3,7 @@
   register: k3s_configuration
   ansible.builtin.template:
     src: k3s.config.yml.j2
-    dest: /etc/rancher/k3s/config.yml
+    dest: /etc/rancher/k3s/config.yaml
     owner: root
     group: root
     mode: "0644"
