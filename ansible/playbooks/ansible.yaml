@@ -1,7 +1,9 @@
+---
 - name: Create Ansible User
-  hosts: all-homelab
+  hosts: test
   gather_facts: false
   become: true
+  tags: bootstrap
   tasks:
     - name: Create Ansible Group
       ansible.builtin.group:

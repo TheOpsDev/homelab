@@ -1,0 +1,8 @@
+k3s_version: v1.31.3+k3s1
+kubectl_version: v1.32.0
+
+system_timezone: US/Pacific
+system_ufw_disable: false
+
+ssh_port: 22
+ssh_max_sessions: 2

@@ -1,0 +1,28 @@
+---
+- name: Create K3s Configuration File
+  register: k3s_configuration
+  ansible.builtin.template:
+    src: k3s.config.yml.j2
+    dest: /etc/rancher/k3s/config.yml
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Create k3s Service File
+  register: k3s_service
+  ansible.builtin.template:
+    src: k3s.service.j2
+    dest: "/etc/systemd/system/k3s.service"
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Enable and Check K3s Service
+  ansible.builtin.systemd:
+    name: k3s
+    daemon_reload: true
+    state: started
+    enabled: true
+
+- name: Configure Kubeconfig for Users
+  ansible.builtin.include_tasks: kubeconfig.yml

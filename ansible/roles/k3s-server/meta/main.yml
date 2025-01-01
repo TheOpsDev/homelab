@@ -1,0 +1,10 @@
+galaxy_info:
+  author: Chris Herrera
+  description: Homelab k3s
+  company: TheOpsDev
+  license: MIT
+  min_ansible_version: "2.1"
+
+argument_specs:
+  main:
+    short_description: k3s server deployment
