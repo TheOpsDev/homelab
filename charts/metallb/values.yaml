@@ -1,0 +1,5 @@
+addressPools:
+  enabled: false
+  name: homelab-local
+  addresses:
+    - 192.168.64.100/30

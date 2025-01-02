@@ -1,0 +1,11 @@
+{{- if .Values.addressPools.enabled -}}
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: {{ .Values.addressPools.name }}
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+  - name: {{ .Values.addressPools.name }}
+{{- end -}}
