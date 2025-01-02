@@ -1,6 +1,4 @@
 argocd:
-  global:
-    domain: argocd.dugout.local
   server:
     service:
       type: NodePort

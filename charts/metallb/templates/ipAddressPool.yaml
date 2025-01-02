@@ -1,0 +1,14 @@
+{{- if .Values.addressPools.enabled -}}
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: {{ .Values.addressPools.name }}
+  namespace: metallb-system
+spec:
+  addresses:
+  {{- range $address := .Values.addressPools.addresses }}
+  - {{ $address }}
+  {{- end }}
+  autoAssign: true
+{{- end -}}
