@@ -1,0 +1,14 @@
+# https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/project.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: cluster-resources
+  namespace: argo
+spec:
+  description: "Core cluster resources, required for the cluster to function"
+  sourceRepos:
+    - 'https://github.com/TheOpsDev/homelab.git'
+  destinations:
+    - namespace: '*'
+      server: https://kubernetes.default.svc
+      name: in-cluster
