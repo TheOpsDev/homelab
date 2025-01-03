@@ -1,0 +1,16 @@
+targetCluster:
+  name: https://kubernetes.default.svc
+
+clusterResources:
+  argo:
+    enabled: true
+    namespace: argo
+    branch: main
+  k8s-dashboard:
+    enabled: true
+    namespace: k8s-dashboard
+    branch: main
+  metallb:
+    enabled: true
+    namespace: metallb-system
+    branch: main

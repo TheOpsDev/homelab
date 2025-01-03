@@ -1,0 +1,25 @@
+{{- range $clusterApp, $appConfig := .Values.clusterResources }}
+{{- if $appConfig.enabled }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ $clusterApp }}
+  namespace: {{ $appConfig.namespace }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: {{ $appConfig.namespace }}
+    server: {{ $.Values.targetCluster.name }}
+  project: cluster-resources
+  source:
+    path: "charts/{{ $clusterApp }}"
+    repoURL: https://github.com/TheOpsDev/homelab
+    targetRevision: {{ $appConfig.branch }}
+    helm:
+      releaseName: {{ $clusterApp }}
+      valuesFiles:
+        - values.yaml
+{{- end }}
+{{- end }}
