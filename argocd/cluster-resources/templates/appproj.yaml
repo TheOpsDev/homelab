@@ -12,3 +12,7 @@ spec:
     - namespace: '*'
       server: https://kubernetes.default.svc
       name: in-cluster
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+      version: '*'
