@@ -12,7 +12,7 @@ repos:
     hooks:
       - id: prettier
         args: ["--write"]
-        exclude: ^charts/
+        exclude: ^charts/|^argocd/cluster-resources/
 default_stages:
   - pre-commit
 fail_fast: true
