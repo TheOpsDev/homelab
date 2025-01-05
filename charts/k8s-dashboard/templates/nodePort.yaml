@@ -5,7 +5,7 @@ metadata:
 spec:
   type: NodePort
   selector:
-    app: kubernetes-dashboard-kong
+    app: k8s-dashboard-kong
   ports:
     - port: 8443
       # By default and for convenience, the `targetPort` is set to
