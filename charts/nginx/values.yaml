@@ -1,6 +1,0 @@
-ingress-nginx:
-  controller:
-    hostAliases:
-    - ip: 10.211.55.3
-      hostnames:
-      - thedugout.local

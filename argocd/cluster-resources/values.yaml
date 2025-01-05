@@ -14,3 +14,7 @@ clusterResources:
     enabled: true
     namespace: metallb-system
     branch: main
+  nginx:
+    enabled: true
+    namespace: nginx
+    branch: main
