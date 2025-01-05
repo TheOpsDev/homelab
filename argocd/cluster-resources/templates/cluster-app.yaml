@@ -20,6 +20,6 @@ spec:
     helm:
       releaseName: {{ $clusterApp }}
       valuesFiles:
-        - "charts/{{ $clusterApp }}/values.yaml"
+        - values.yaml
 {{- end }}
 {{- end }}
