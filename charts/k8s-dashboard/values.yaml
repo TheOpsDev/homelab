@@ -1,0 +1,6 @@
+kubernetes-dashboard:
+  ingress:
+    enabled: true
+    hosts:
+      - localhost
+      - k8s-dashboard.home.local
