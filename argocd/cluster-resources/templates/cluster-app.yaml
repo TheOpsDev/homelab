@@ -19,7 +19,7 @@ spec:
     targetRevision: {{ $appConfig.branch }}
     helm:
       releaseName: {{ $clusterApp }}
-      valuesFiles:
+      valueFiles:
         - values.yaml
 {{- end }}
 {{- end }}
