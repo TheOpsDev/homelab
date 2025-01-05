@@ -4,3 +4,4 @@ kubernetes-dashboard:
     hosts:
       - localhost
       - k8s-dashboard.home.local
+    ingressClassName: nginx
