@@ -1,4 +1,9 @@
 argocd:
+  global:
+    domain: argocd.home.local
   server:
-    service:
-      type: NodePort
+    ingress:
+      enabled: true
+      ingressClassName: "nginx"
+      extraHosts:
+        - localhost
