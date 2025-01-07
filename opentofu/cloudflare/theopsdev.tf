@@ -15,14 +15,10 @@ resource "cloudflare_record" "www_theopsdev" {
   proxied = true
 }
 
-resource "cloudflare_page_rule" "redirect_all_traffic" {
+resource "cloudflare_record" "blog_theopsdev" {
   zone_id = cloudflare_zone.theopsdev.id
-  target  = cloudflare_zone.theopsdev.zone
-
-  actions {
-    forwarding_url {
-      url         = "https://github.com/TheOpsDev/"
-      status_code = 301
-    }
-  }
+  name    = "blog"
+  type    = "CNAME"
+  content = "hashnode.network"
+  proxied = false
 }
