@@ -1,4 +1,3 @@
-
 resource "cloudflare_zone" "theopsdev" {
   account_id = var.cloudflare_account_id
   zone       = "theops.dev"
