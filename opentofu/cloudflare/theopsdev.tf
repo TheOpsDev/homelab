@@ -1,3 +1,11 @@
+locals {
+  opsdev_mx_records = {
+    "route1.mx.cloudflare.net." = 78
+    "route2.mx.cloudflare.net." = 42
+    "route3.mx.cloudflare.net." = 100
+  }  
+}
+
 resource "cloudflare_record" "root_theopsdev" {
   zone_id = cloudflare_zone.theopsdev.id
   name    = "@"
@@ -21,4 +29,39 @@ resource "cloudflare_record" "blog_theopsdev" {
   type    = "CNAME"
   content = "hashnode.network"
   proxied = false
+}
+
+resource "cloudflare_record" "mx_opsdev" {
+  for_each = local.opsdev_mx_records
+
+  zone_id  = cloudflare_zone.theopsdev.id
+  name     = "theops.dev"
+  type     = "MX"
+  content  = each.key
+  priority = each.value
+}
+
+resource "cloudflare_record" "txt_opsdev" {
+  zone_id = cloudflare_zone.theopsdev.id
+  name    = "theops.dev"
+  type    = "TXT"
+  content = "v=spf1 include:_spf.mx.cloudflare.net ~all"
+
+}
+
+resource "cloudflare_email_routing_rule" "chris_theopsdev" {
+  zone_id = cloudflare_zone.theopsdev.id
+  name    = "christian-herrera.com"
+  enabled = true
+
+  matcher {
+    type  = "literal"
+    field = "to"
+    value = "chris@theops.dev"
+  }
+
+  action {
+    type  = "forward"
+    value = ["christian@christian-herrera.com"]
+  }
 }
