@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-ui
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "argocd.homelab-main.home"
+    http:
+      paths:
+      - pathType: ImplementationSpecific
+        path: "/"
+        backend:
+          service:
+            name: argo-argocd-server
+            port:
+              number: 8080
