@@ -1,0 +1,7 @@
+ingress-nginx:
+  controller:
+    watchIngressWithoutClass: true
+    hostPort:
+      enabled: true
+      http: 80
+      https: 443
