@@ -1,0 +1,6 @@
+prometheus:
+  server:
+    ingress:
+      enabled: true
+      hosts:
+        - prometheus.homelab-main.local

@@ -18,3 +18,7 @@ clusterResources:
     enabled: true
     namespace: nginx
     branch: main
+  prometheus:
+    enabled: true
+    namespace: prometheus
+    branch: main
