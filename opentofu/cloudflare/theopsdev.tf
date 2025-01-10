@@ -3,7 +3,7 @@ locals {
     "route1.mx.cloudflare.net." = 78
     "route2.mx.cloudflare.net." = 42
     "route3.mx.cloudflare.net." = 100
-  }  
+  }
 }
 
 resource "cloudflare_record" "root_theopsdev" {
@@ -51,13 +51,30 @@ resource "cloudflare_record" "txt_opsdev" {
 
 resource "cloudflare_email_routing_rule" "chris_theopsdev" {
   zone_id = cloudflare_zone.theopsdev.id
-  name    = "christian-herrera.com"
+  name    = "chris-theopsdev"
   enabled = true
 
   matcher {
     type  = "literal"
     field = "to"
     value = "chris@theops.dev"
+  }
+
+  action {
+    type  = "forward"
+    value = ["christian@christian-herrera.com"]
+  }
+}
+
+resource "cloudflare_email_routing_rule" "admin_theopsdev" {
+  zone_id = cloudflare_zone.theopsdev.id
+  name    = "admin-theopsdev"
+  enabled = true
+
+  matcher {
+    type  = "literal"
+    field = "to"
+    value = "admin@theops.dev"
   }
 
   action {
