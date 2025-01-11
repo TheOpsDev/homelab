@@ -1,9 +1,13 @@
 argocd:
   global:
-    domain: argocd.home.local
+    domain: argocd.homelab-main.local
+  config:
+    params:
+    # https://github.com/argoproj/argo-cd/issues/2953
+      server.insecure: true
   server:
+    extraArgs:
+      - --insecure
     ingress:
       enabled: true
       ingressClassName: "nginx"
-      extraHosts:
-        - localhost
