@@ -13,6 +13,12 @@ spec:
     namespace: {{ $appConfig.namespace }}
     server: {{ $.Values.targetCluster.name }}
   project: cluster-resources
+  syncPolicy:
+    automated:
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - PruneLast=true
   source:
     path: "charts/{{ $clusterApp }}"
     repoURL: https://github.com/TheOpsDev/homelab
