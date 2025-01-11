@@ -18,7 +18,7 @@ repos:
     hooks:
       - id: yamllint
         files: ^(charts|ansible|argocd)/.*\.ya?ml$
-        exclude: ^(charts/.*\.lint\.yml$|argocd/cluster-resources/.*)
+        exclude: ^(opentofu/.*)
 default_stages:
   - pre-commit
 fail_fast: true
