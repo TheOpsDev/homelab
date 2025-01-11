@@ -1,7 +1,12 @@
+---
 kubernetes-dashboard:
-  ingress:
-    enabled: true
-    hosts:
-      - localhost
-      - k8s-dashboard.home.local
-    ingressClassName: nginx
+  app:
+    ingress:
+      enabled: true
+      hosts:
+        - localhost
+        - k8s-dashboard.homelab-main.local
+      ingressClassName: nginx
+      tls:
+        enabled: false
+        secretName: k8s-dashboard-tls
