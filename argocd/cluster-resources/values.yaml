@@ -1,3 +1,4 @@
+---
 targetCluster:
   name: https://kubernetes.default.svc
 
@@ -21,4 +22,8 @@ clusterResources:
   prometheus:
     enabled: true
     namespace: prometheus
+    branch: main
+  cert-manager:
+    enabled: true
+    namespace: cert-manager
     branch: main
