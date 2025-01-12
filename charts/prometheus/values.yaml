@@ -1,6 +1,9 @@
+---
 prometheus:
   server:
     ingress:
+      annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt"
       enabled: true
       hosts:
         - prometheus.homelab-main.local
