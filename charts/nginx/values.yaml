@@ -1,11 +1,7 @@
 ingress-nginx:
   controller:
-    reportNodeInternalIp: true
     watchIngressWithoutClass: true
     hostPort:
       enabled: true
       http: 80
       https: 443
-    service:
-      externalIPs:
-        - 192.168.64.3
