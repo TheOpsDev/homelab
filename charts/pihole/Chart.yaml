@@ -1,0 +1,9 @@
+---
+apiVersion: v2
+name: pihole-dns
+description: Self Hosted DNS Server
+version: 1.0.0
+dependencies:
+  - name: pihole
+    version: "2.27.0"
+    repository: "https://mojo2600.github.io/pihole-kubernetes/"

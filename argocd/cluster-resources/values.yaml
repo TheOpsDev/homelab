@@ -27,3 +27,7 @@ clusterResources:
     enabled: true
     namespace: cert-manager
     branch: main
+  pihole:
+    enabled: true
+    namespace: pihole
+    branch: main
