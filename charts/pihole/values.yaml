@@ -1,7 +1,5 @@
 pihole:
   replicaCount: 2
-  dnsHostPort:
-    enabled: true
   serviceDns:
     mixedService: true
     nodePort: 30053
