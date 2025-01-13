@@ -1,0 +1,19 @@
+pihole:
+  replicaCount: 2
+  dnsHostPort:
+    enabled: true
+  serviceDns:
+    mixedService: true
+    nodePort: 30053
+  persistentVolumeClaim:
+    enabled: true
+  virtualHost: pihole.homelab-main.local
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hosts:
+      - host: pihole.homelab-main.local
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt"
+  DNS1: "1.1.1.1"
+  DNS2: "1.0.0.1"
