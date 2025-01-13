@@ -1,10 +1,11 @@
+---
 pihole:
   replicaCount: 2
   persistentVolumeClaim:
     enabled: true
   virtualHost: pihole.homelab-main.local
   ingress:
-    enabled: true
+    enabled: false
     ingressClassName: nginx
     hosts:
       - host: pihole.homelab-main.local
