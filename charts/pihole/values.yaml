@@ -1,8 +1,5 @@
 pihole:
   replicaCount: 2
-  serviceDns:
-    mixedService: true
-    nodePort: 30053
   persistentVolumeClaim:
     enabled: true
   virtualHost: pihole.homelab-main.local
