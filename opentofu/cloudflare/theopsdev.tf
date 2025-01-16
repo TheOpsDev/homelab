@@ -46,7 +46,6 @@ resource "cloudflare_record" "txt_opsdev" {
   name    = "theops.dev"
   type    = "TXT"
   content = "v=spf1 include:_spf.mx.cloudflare.net ~all"
-
 }
 
 resource "cloudflare_email_routing_rule" "chris_theopsdev" {
@@ -80,5 +79,18 @@ resource "cloudflare_email_routing_rule" "admin_theopsdev" {
   action {
     type  = "forward"
     value = ["christian@christian-herrera.com"]
+  }
+}
+
+resource "cloudflare_page_rule" "linkedin_theopsdev" {
+  zone_id  = cloudflare_zone.theopsdev.id
+  target   = "linkedin.theops.dev/*"
+  priority = 1
+
+  actions {
+    forwarding_url {
+      url         = "https://linkedin.com/in/theopsdev"
+      status_code = 301
+    }
   }
 }
