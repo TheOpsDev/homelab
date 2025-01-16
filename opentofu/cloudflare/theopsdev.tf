@@ -31,6 +31,14 @@ resource "cloudflare_record" "blog_theopsdev" {
   proxied = false
 }
 
+resource "cloudflare_record" "linkedin_theopsdev" {
+  zone_id = cloudflare_zone.theopsdev.id
+  name    = "linkedin"
+  type    = "CNAME"
+  content = "linkedin.com"
+  proxied = true
+}
+
 resource "cloudflare_record" "mx_opsdev" {
   for_each = local.opsdev_mx_records
 
