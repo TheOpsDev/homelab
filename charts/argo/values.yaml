@@ -1,5 +1,5 @@
 ---
-argocd:
+argo-cd:
   global:
     domain: argocd.homelab-main.local
   config:
