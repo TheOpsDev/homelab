@@ -9,6 +9,9 @@ on:
       - reopened
       - edited
 
+env:
+  tf_actions_working_dir: "."
+
 jobs:
   CommentPR:
     name: OpenTofu Comment PR
