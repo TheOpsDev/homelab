@@ -56,6 +56,21 @@ resource "cloudflare_record" "txt_opsdev" {
   content = "v=spf1 include:_spf.mx.cloudflare.net ~all"
 }
 
+resource "cloudflare_record" "do_theopsdev" {
+  for_each = toset([
+    "ns1.digitalocean.com",
+    "ns2.digitalocean.com",
+    "ns3.digitalocean.com"
+  ])
+
+  zone_id = cloudflare_zone.theopsdev.id
+  name    = "do"
+  type    = "NS"
+  content = each.value
+  proxied = false
+
+}
+
 resource "cloudflare_email_routing_rule" "chris_theopsdev" {
   zone_id = cloudflare_zone.theopsdev.id
   name    = "chris-theopsdev"
