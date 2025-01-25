@@ -6,6 +6,9 @@ yaml-files:
   - "*.yml"
   - ".yamllint"
 
+ignore:
+  - .github/workflows/*
+
 rules:
   line-length:
     max: 120

@@ -8,43 +8,58 @@ on:
       - synchronize
       - reopened
       - edited
+    paths:
+      - "opentofu/**"
 
 env:
   tf_actions_working_dir: "."
 
 jobs:
-  CommentPR:
-    name: OpenTofu Comment PR
+  determine-changed-dirs:
     runs-on: ubuntu-latest
+    outputs:
+      changed-dirs: ${{ steps.get-changed-dirs.outputs.changed-dirs }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          sparse-paths: |
+            opentofu
+      - name: Get changed directories
+        id: get-changed-dirs
+        run: |
+          echo "::set-output name=changed-dirs::$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '/' | cut -d '/' -f1 | sort -u | tr '\n' ',')"
+
+  comment-pr:
+    needs: determine-changed-dirs
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dir: ${{ fromJson(needs.determine-changed-dirs.outputs.changed-dirs) }}
     defaults:
       run:
-        working-directory: ${{ env.tf_actions_working_dir }}
+        working-directory: ${{ matrix.dir }}
     permissions:
       pull-requests: write
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: opentofu/setup-opentofu@v1
         with:
           tofu_version: 1.9.0
-
       - name: OpenTofu fmt
         id: fmt
         run: tofu fmt -check
         continue-on-error: true
-
       - name: OpenTofu Init
         id: init
         run: tofu init
-
       - name: OpenTofu Validate
         id: validate
-        run: tofu validate -concise
-
+        run: tofu validate
       - name: OpenTofu Plan
         id: plan
-        run: tofu plan -no-color
+        run: tofu plan -no-color -concise
         continue-on-error: true
-
       - uses: actions/github-script@v6
         if: github.event_name == 'pull_request'
         env:
@@ -86,7 +101,7 @@ jobs:
 
             *Pusher: @${{ github.actor }}, \
             Action: \`${{ github.event_name }}\`, \
-            Working Directory: \`${{ env.tf_actions_working_dir }}\`, \
+            Working Directory: \`${{ matrix.dir }}\`, \
             Workflow: \`${{ github.workflow }}\`*`;
 
             // 3. If we have a comment, update it, otherwise create a new one
