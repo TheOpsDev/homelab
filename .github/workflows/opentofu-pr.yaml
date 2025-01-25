@@ -11,28 +11,39 @@ on:
     paths:
       - "opentofu/**"
 
-env:
-  tf_actions_working_dir: "."
-
 jobs:
   determine-changed-dirs:
     runs-on: ubuntu-latest
     outputs:
-      changed-dirs: ${{ steps.get-changed-dirs.outputs.changed-dirs }}
+      changed-dirs: ${{ steps.get-modified-opentofu-dirs.outputs.changed-dirs }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Get Changed Files
+        id: get-changed-files
+        uses: tj-actions/changed-files@v45
         with:
-          sparse-paths: |
-            opentofu
-      - name: Get changed directories
-        id: get-changed-dirs
+          files: |
+            opentofu/**
+      - name: Identify Modified OpenTofu Directories
+        id: get-modified-opentofu-dirs
         run: |
-          echo "::set-output name=changed-dirs::$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '/' | cut -d '/' -f1 | sort -u | tr '\n' ',')"
+          echo "${{ steps.get-changed-files.outputs.all_changed_files }}" | tr ' ' '\n' | sed 's|/[^/]*$||' | sort -u | uniq | jq -R -s -c 'split("\n") | map(select(length > 0))' > modified_dirs.txt
+          echo changed-dirs=$(cat modified_dirs.txt) >> $GITHUB_OUTPUT
 
   comment-pr:
     needs: determine-changed-dirs
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      TF_VAR_cloudflare_account_id: ${{ secrets.TF_VAR_cloudflare_account_id }}
+      DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
+      SPACES_SECRET_ACCESS_KEY: ${{ secrets.SPACES_SECRET_ACCESS_KEY }}
+      SPACES_ACCESS_KEY_ID: ${{ secrets.SPACES_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      TF_VAR_pagerduty_token: ${{ secrets.TF_VAR_pagerduty_token }}
     strategy:
       matrix:
         dir: ${{ fromJson(needs.determine-changed-dirs.outputs.changed-dirs) }}
