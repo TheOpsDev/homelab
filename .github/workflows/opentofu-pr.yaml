@@ -66,7 +66,7 @@ jobs:
         run: tofu init
       - name: OpenTofu Validate
         id: validate
-        run: tofu validate
+        run: tofu validate -no-color
       - name: OpenTofu Plan
         id: plan
         run: tofu plan -no-color -concise
@@ -94,7 +94,7 @@ jobs:
             #### OpenTofu Validation 🤖\`${{ steps.validate.outcome }}\`
             <details><summary>Validation Output</summary>
 
-            \`\`\`\n
+            \`\`\`golang\n
             ${{ steps.validate.outputs.stdout }}
             \`\`\`
 
@@ -104,7 +104,7 @@ jobs:
 
             <details><summary>Show Plan</summary>
 
-            \`\`\`\n
+            \`\`\`golang\n
             ${process.env.PLAN}
             \`\`\`
 
