@@ -187,6 +187,9 @@ jobs:
           name: tf-${{ SERVICE_NAME }}.plan
           path: ${{ matrix.dir }}/tf-${{ SERVICE_NAME }}.plan
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.run_id }}
+      - name: OpenTofu Init
+        run: tofu init
       - name: OpenTofu Apply
         run: |
           tofu apply -no-color -auto-approve -concise ${{ matrix.dir }}/tf-${{ SERVICE_NAME }}.plan
