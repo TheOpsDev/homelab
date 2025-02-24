@@ -84,8 +84,8 @@ jobs:
           SERVICE_NAME: ${{ steps.get-service-name.outputs.SERVICE_NAME }}
         uses: actions/upload-artifact@v4
         with:
-          name: tf-${{ SERVICE_NAME }}.plan
-          path: ${{ matrix.dir }}/tf-${{ SERVICE_NAME }}.plan
+          name: tf-${{ env.SERVICE_NAME }}.plan
+          path: ${{ matrix.dir }}/tf-${{ env.SERVICE_NAME }}.plan
           overwrite: true
           if-no-files-found: error
           retention-days: 1
@@ -186,8 +186,8 @@ jobs:
       - name: download-tf-plan
         uses: actions/download-artifact@v2
         with:
-          name: tf-${{ SERVICE_NAME }}.plan
-          path: ${{ matrix.dir }}/tf-${{ SERVICE_NAME }}.plan
+          name: tf-${{ env.SERVICE_NAME }}.plan
+          path: ${{ matrix.dir }}/tf-${{ env.SERVICE_NAME }}.plan
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ github.run_id }}
       - name: OpenTofu Init
