@@ -10,7 +10,6 @@ on:
       - edited
     paths:
       - "opentofu/**"
-      - "!opentofu/tofu-modules/**"
 
 jobs:
   determine-changed-dirs:
@@ -26,6 +25,8 @@ jobs:
         with:
           files: |
             opentofu/**
+          files_ignore: |
+            opentofu/tofu-modules/**
       - name: Identify Modified OpenTofu Directories
         id: get-modified-opentofu-dirs
         run: |
