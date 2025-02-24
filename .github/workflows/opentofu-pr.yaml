@@ -182,12 +182,13 @@ jobs:
           service_name=$(echo "${{ matrix.dir }}" | awk -F'/' '{print $2}')
           echo "service_name=${service_name}" >> "$GITHUB_OUTPUT"
       - name: download-tf-plan
-        uses: actions/download-artifact@v2
+        uses: dawidd6/action-download-artifact@v8
         with:
+          workflow: opentofu-pr.yaml
+          check_artifacts: true
           name: tf-${{ steps.plan.outputs.service_name }}.plan
           path: ${{ matrix.dir }}/tf-${{ steps.plan.outputs.service_name }}.plan
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          run-id: ${{ github.run_id }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: OpenTofu Init
         run: tofu init
       - name: OpenTofu Apply
