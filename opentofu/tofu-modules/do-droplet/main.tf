@@ -5,7 +5,7 @@ locals {
     var.region,
     var.name,
     var.droplet_image,
-    ], var.tags))
+  ], var.tags))
 }
 resource "digitalocean_volume" "opsdev" {
   region                  = var.region
