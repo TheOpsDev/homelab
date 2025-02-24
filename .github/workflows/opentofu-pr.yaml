@@ -76,8 +76,8 @@ jobs:
         if: steps.plan.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.dir }}/tf-${{ github.sha }}.plan
-          path: tf-${{ github.sha }}.plan
+          name: tf-${{ github.sha }}.plan
+          path: ${{ matrix.dir }}/tf-${{ github.sha }}.plan
           overwrite: true
           if-no-files-found: error
           retention-days: 1
