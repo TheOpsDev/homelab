@@ -151,7 +151,7 @@ jobs:
 
   apply-tf-plan:
     if: github.event.pull_request.merged == true
-    needs: [generate-tf-plan, determine-changed-dirs]
+    needs: [determine-changed-dirs]
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -187,6 +187,8 @@ jobs:
         with:
           workflow: opentofu-pr.yaml
           check_artifacts: true
+          search_artifacts: true
+          use_unzip: true
           name: tf-${{ steps.get-service-name.outputs.service_name }}.plan
           path: ${{ matrix.dir }}/tf-${{ steps.get-service-name.outputs.service_name }}.plan
           github_token: ${{ secrets.GITHUB_TOKEN }}
