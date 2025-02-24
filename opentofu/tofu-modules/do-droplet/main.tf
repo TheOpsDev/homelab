@@ -10,7 +10,7 @@ locals {
 
 data "digitalocean_ssh_key" "macbook" {
   name = "Personal Macbook"
-  
+
 }
 
 resource "digitalocean_volume" "opsdev" {
@@ -29,7 +29,7 @@ resource "digitalocean_droplet" "opsdev" {
   size     = var.size
   vpc_uuid = var.vpc_id
   tags     = local.tags
-  ssh_keys = [ data.digitalocean_ssh_key.macbook.id ]
+  ssh_keys = [data.digitalocean_ssh_key.macbook.id]
 }
 
 resource "digitalocean_volume_attachment" "opsdev" {
