@@ -75,17 +75,16 @@ jobs:
         id: plan
         run: |
           service_name=$(echo "${{ matrix.dir }}" | awk -F'/' '{print $2}')
-          echo "SERVICE_NAME=${service_name}" >> $GITHUB_ENV
+          # echo "SERVICE_NAME=${service_name}" >> $GITHUB_ENV
+          echo "service_name=${service_name}" >> "$GITHUB_OUTPUT"
           tofu plan -no-color -concise -out="tf-${service_name}.plan"
         continue-on-error: true
       - name: Upload TF Plan Artifact
         if: steps.plan.outcome == 'success'
-        env:
-          SERVICE_NAME: ${{ steps.get-service-name.outputs.SERVICE_NAME }}
         uses: actions/upload-artifact@v4
         with:
-          name: tf-${{ env.SERVICE_NAME }}.plan
-          path: ${{ matrix.dir }}/tf-${{ env.SERVICE_NAME }}.plan
+          name: tf-${{ steps.plan.outputs.service_name }}.plan
+          path: ${{ matrix.dir }}/tf-${{ steps.plan.outputs.service_name }}.plan
           overwrite: true
           if-no-files-found: error
           retention-days: 1
