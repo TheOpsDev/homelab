@@ -76,9 +76,10 @@ jobs:
         if: steps.plan.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
-          name: tf-${{ github.sha }}.plan
+          name: ${{ matrix.dir }}/tf-${{ github.sha }}.plan
           path: tf-${{ github.sha }}.plan
           overwrite: true
+          if-no-files-found: error
           retention-days: 1
       - uses: actions/github-script@v6
         if: github.event_name == 'pull_request'
