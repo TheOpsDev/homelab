@@ -33,7 +33,7 @@ jobs:
           echo "${{ steps.get-changed-files.outputs.all_changed_files }}" | tr ' ' '\n' | sed 's|/[^/]*$||' | sort -u | uniq | jq -R -s -c 'split("\n") | map(select(length > 0))' > modified_dirs.txt
           echo changed-dirs=$(cat modified_dirs.txt) >> $GITHUB_OUTPUT
 
-  comment-pr:
+  generate-tf-plan:
     needs: determine-changed-dirs
     runs-on: ubuntu-latest
     outputs:
@@ -149,8 +149,8 @@ jobs:
             }
 
   apply-tf-plan:
-    if: steps.plan.outcome == 'success' && github.event.pull_request.merged == true
-    needs: [comment-pr, determine-changed-dirs]
+    if: github.event.pull_request.merged == true
+    needs: [generate-tf-plan, determine-changed-dirs]
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
