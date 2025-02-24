@@ -9,7 +9,7 @@ on:
       - reopened
       - edited
     paths:
-      - "opentofu/**"
+      - "opentofu/{cloudflare,digitalocean,pagerduty}/**"
 
 jobs:
   determine-changed-dirs:
@@ -69,8 +69,16 @@ jobs:
         run: tofu validate -no-color
       - name: OpenTofu Plan
         id: plan
-        run: tofu plan -no-color -concise
+        run: tofu plan -no-color -concise -out=tf-${{ github.sha }}.plan
         continue-on-error: true
+      - name: Upload TF Plan Artifact
+        if: steps.plan.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: tf-${{ github.sha }}.plan
+          path: tf-${{ github.sha }}.plan
+          overwrite: true
+          retention-days: 1
       - uses: actions/github-script@v6
         if: github.event_name == 'pull_request'
         env:

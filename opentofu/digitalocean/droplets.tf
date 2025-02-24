@@ -1,7 +1,7 @@
 module "k3s-controlplane" {
   source = "../tofu-modules/do-droplet"
 
-  name = "k3s-controlplane"
+  name = "k3s-controlplane-1"
   size = "basic-xs"
   storage_size = 50 # GB
   
