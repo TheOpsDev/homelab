@@ -1,6 +1,6 @@
 ---
 name: OpenTofu Comment PR
-run-name: OpenTofu ${{ github.event.number }}
+run-name: OpenTofu - PR Number ${{ github.event.number }}
 on:
   pull_request:
     types:
@@ -187,11 +187,11 @@ jobs:
         with:
           workflow: opentofu-pr.yaml
           check_artifacts: true
-          name: tf-${{ steps.plan.outputs.service_name }}.plan
-          path: ${{ matrix.dir }}/tf-${{ steps.plan.outputs.service_name }}.plan
+          name: tf-${{ steps.get-service-name.outputs.service_name }}.plan
+          path: ${{ matrix.dir }}/tf-${{ steps.get-service-name.outputs.service_name }}.plan
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: OpenTofu Init
         run: tofu init
       - name: OpenTofu Apply
         run: |
-          tofu apply -no-color -auto-approve -concise ${{ matrix.dir }}/tf-${{ steps.plan.outputs.service_name }}.plan
+          tofu apply -no-color -auto-approve -concise ${{ matrix.dir }}/tf-${{ steps.get-service-name.outputs.service_name }}.plan
