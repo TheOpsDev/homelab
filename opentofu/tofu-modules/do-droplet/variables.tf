@@ -21,7 +21,7 @@ variable "size" {
   description = "The size of the Droplet"
 
   validation {
-    condition     = !(contains(["basic-xs", "basic-s", "professional-xs", "professional-s"], var.size))
+    condition     = contains(["basic-xs", "basic-s", "professional-xs", "professional-s"], var.size)
     error_message = "Invalid Droplet size. Must be one of: basic-xs, basic-s, basic-m, basic-l"
   }
 }
