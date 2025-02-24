@@ -75,7 +75,6 @@ jobs:
         id: plan
         run: |
           service_name=$(echo "${{ matrix.dir }}" | awk -F'/' '{print $2}')
-          # echo "SERVICE_NAME=${service_name}" >> $GITHUB_ENV
           echo "service_name=${service_name}" >> "$GITHUB_OUTPUT"
           tofu plan -no-color -concise -out="tf-${service_name}.plan"
         continue-on-error: true
@@ -181,12 +180,12 @@ jobs:
         id: get-service-name
         run: |
           service_name=$(echo "${{ matrix.dir }}" | awk -F'/' '{print $2}')
-          echo "SERVICE_NAME=${service_name}" >> $GITHUB_ENV
+          echo "service_name=${service_name}" >> "$GITHUB_OUTPUT"
       - name: download-tf-plan
         uses: actions/download-artifact@v2
         with:
-          name: tf-${{ env.SERVICE_NAME }}.plan
-          path: ${{ matrix.dir }}/tf-${{ env.SERVICE_NAME }}.plan
+          name: tf-${{ steps.plan.outputs.service_name }}.plan
+          path: ${{ matrix.dir }}/tf-${{ steps.plan.outputs.service_name }}.plan
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ github.run_id }}
       - name: OpenTofu Init
