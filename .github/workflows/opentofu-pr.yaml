@@ -196,4 +196,4 @@ jobs:
         run: tofu init
       - name: OpenTofu Apply
         run: |
-          tofu apply -no-color -auto-approve -concise ${{ matrix.dir }}/tf-${{ steps.get-service-name.outputs.service_name }}.plan
+          tofu apply -no-color -auto-approve -concise ${{ matrix.dir }}/tf-${{ steps.get-service-name.outputs.service_name }}.plan/tf-${{ steps.get-service-name.outputs.service_name }}.plan

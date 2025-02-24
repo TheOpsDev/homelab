@@ -4,7 +4,7 @@ module "k3s-controlplane" {
 
   name         = "k3s-control-1"
   size         = "basic-xs"
-  storage_size = 100 # GB
+  storage_size = 50 # GB
 
   vpc_id = digitalocean_vpc.homelab.id
   tags   = ["k3s", "controlplane"]
