@@ -25,15 +25,19 @@ jobs:
         with:
           files: |
             opentofu/**
+          files_ignore: |
+            opentofu/tofu-modules/**
       - name: Identify Modified OpenTofu Directories
         id: get-modified-opentofu-dirs
         run: |
           echo "${{ steps.get-changed-files.outputs.all_changed_files }}" | tr ' ' '\n' | sed 's|/[^/]*$||' | sort -u | uniq | jq -R -s -c 'split("\n") | map(select(length > 0))' > modified_dirs.txt
           echo changed-dirs=$(cat modified_dirs.txt) >> $GITHUB_OUTPUT
 
-  comment-pr:
+  generate-tf-plan:
     needs: determine-changed-dirs
     runs-on: ubuntu-latest
+    outputs:
+      tf-plan-id: ${{ steps.upload-artifact.outputs.artifact_id }}
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -69,8 +73,20 @@ jobs:
         run: tofu validate -no-color
       - name: OpenTofu Plan
         id: plan
-        run: tofu plan -no-color -concise
+        run: |
+          service_name=$(echo "${{ matrix.dir }}" | awk -F'/' '{print $2}')
+          echo "service_name=${service_name}" >> "$GITHUB_OUTPUT"
+          tofu plan -no-color -concise -out="tf-${service_name}.plan"
         continue-on-error: true
+      - name: Upload TF Plan Artifact
+        if: steps.plan.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: tf-${{ steps.plan.outputs.service_name }}.plan
+          path: ${{ matrix.dir }}/tf-${{ steps.plan.outputs.service_name }}.plan
+          overwrite: true
+          if-no-files-found: error
+          retention-days: 1
       - uses: actions/github-script@v6
         if: github.event_name == 'pull_request'
         env:
@@ -131,3 +147,50 @@ jobs:
                 body: output
               })
             }
+
+  apply-tf-plan:
+    if: github.event.pull_request.merged == true
+    needs: [generate-tf-plan, determine-changed-dirs]
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      TF_VAR_cloudflare_account_id: ${{ secrets.TF_VAR_cloudflare_account_id }}
+      DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
+      SPACES_SECRET_ACCESS_KEY: ${{ secrets.SPACES_SECRET_ACCESS_KEY }}
+      SPACES_ACCESS_KEY_ID: ${{ secrets.SPACES_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      TF_VAR_pagerduty_token: ${{ secrets.TF_VAR_pagerduty_token }}
+    strategy:
+      matrix:
+        dir: ${{ fromJson(needs.determine-changed-dirs.outputs.changed-dirs) }}
+    defaults:
+      run:
+        working-directory: ${{ matrix.dir }}
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: opentofu/setup-opentofu@v1
+        with:
+          tofu_version: 1.9.0
+      - name: Get Service Name
+        id: get-service-name
+        run: |
+          service_name=$(echo "${{ matrix.dir }}" | awk -F'/' '{print $2}')
+          echo "service_name=${service_name}" >> "$GITHUB_OUTPUT"
+      - name: download-tf-plan
+        uses: dawidd6/action-download-artifact@v8
+        with:
+          workflow: opentofu-pr.yaml
+          check_artifacts: true
+          name: tf-${{ steps.plan.outputs.service_name }}.plan
+          path: ${{ matrix.dir }}/tf-${{ steps.plan.outputs.service_name }}.plan
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: OpenTofu Init
+        run: tofu init
+      - name: OpenTofu Apply
+        run: |
+          tofu apply -no-color -auto-approve -concise ${{ matrix.dir }}/tf-${{ steps.plan.outputs.service_name }}.plan
