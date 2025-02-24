@@ -1,4 +1,4 @@
-# Control Plane
+## Control Plane
 module "k3s-controlplane" {
   source = "../tofu-modules/do-droplet"
 
