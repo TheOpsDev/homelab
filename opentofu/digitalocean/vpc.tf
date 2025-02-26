@@ -13,6 +13,7 @@ resource "digitalocean_vpc" "homelab" {
 
 resource "digitalocean_firewall" "k3s_cluster" {
   name = "k3s-cluster"
+  droplet_ids = local.droplet_ids
 
   dynamic "inbound_rule" {
     for_each = local.k3s_cluster_fw.inbound_ports
