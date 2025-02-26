@@ -68,7 +68,6 @@ resource "cloudflare_record" "do_theopsdev" {
   type    = "NS"
   content = each.value
   proxied = false
-
 }
 
 resource "cloudflare_email_routing_rule" "chris_theopsdev" {
