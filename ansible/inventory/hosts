@@ -5,7 +5,7 @@ local-homelab:
 
 remote-homelab:
   hosts:
-    homelab-main.theops.dev
+    k3s.do.theops.dev
 
 test:
   children:

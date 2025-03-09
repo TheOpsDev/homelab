@@ -1,6 +1,6 @@
 ---
 - name: Create Ansible User
-  hosts: test
+  hosts: prod
   gather_facts: false
   become: true
   tags: bootstrap
