@@ -1,7 +1,7 @@
 ---
 argo-cd:
   global:
-    domain: argocd.homelab-main.local
+    domain: argocd.do.theops.dev
   config:
     params:
     # https://github.com/argoproj/argo-cd/issues/2953
