@@ -1,6 +1,6 @@
 ---
 - name: Install and Setup K3s Server
-  hosts: test
+  hosts: prod
   gather_facts: true
   become: true
   tasks:
