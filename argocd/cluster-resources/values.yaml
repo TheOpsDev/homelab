@@ -12,7 +12,7 @@ clusterResources:
     namespace: k8s-dashboard
     branch: main
   metallb:
-    enabled: true
+    enabled: false
     namespace: metallb-system
     branch: main
   nginx:
@@ -20,14 +20,14 @@ clusterResources:
     namespace: nginx
     branch: main
   prometheus:
-    enabled: true
+    enabled: false
     namespace: prometheus
     branch: main
   cert-manager:
-    enabled: true
+    enabled: false
     namespace: cert-manager
     branch: main
   pihole:
-    enabled: true
+    enabled: false
     namespace: pihole
     branch: main
