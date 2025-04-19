@@ -1,0 +1,8 @@
+apiVersion: v2
+name: traefik
+description: Chart for deploying Traefik
+version: 1.0.0
+dependencies:
+  - name: traefik
+    version: "35.0.1"
+    repository: "https://traefik.github.io/charts"

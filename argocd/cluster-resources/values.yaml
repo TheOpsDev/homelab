@@ -1,7 +1,5 @@
----
 targetCluster:
   name: https://kubernetes.default.svc
-
 clusterResources:
   argo:
     enabled: true
@@ -16,11 +14,11 @@ clusterResources:
     namespace: metallb-system
     branch: main
   nginx:
-    enabled: true
+    enabled: false
     namespace: nginx
     branch: main
-  prometheus:
-    enabled: false
+  prom-operator:
+    enabled: true
     namespace: prometheus
     branch: main
   cert-manager:
@@ -30,4 +28,8 @@ clusterResources:
   pihole:
     enabled: false
     namespace: pihole
+    branch: main
+  traefik:
+    enabled: true
+    namespace: traefik
     branch: main
