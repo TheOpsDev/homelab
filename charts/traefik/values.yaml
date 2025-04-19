@@ -1,0 +1,22 @@
+traefik:
+  serviceAccount:
+    name: "traefik"
+  podDisruptionBudget:
+    enabled: true
+    minAvailable: 1
+  kubernetesGateway:
+    enabled: true
+    labelSelector:
+      ingressClass: traefik-gateway
+  ingressRoute:
+    dashboard:
+      enabled: true
+  logs:
+    general:
+      level: "INFO"
+  metrics:
+    prometheus:
+      serviceMonitor:
+        enabled: true
+      service:
+        enabled: true
