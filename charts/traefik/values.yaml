@@ -1,6 +1,4 @@
 traefik:
-  serviceAccount:
-    name: "traefik"
   podDisruptionBudget:
     enabled: true
     minAvailable: 1
