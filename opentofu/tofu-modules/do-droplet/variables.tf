@@ -21,8 +21,8 @@ variable "size" {
   description = "The size of the Droplet"
 
   validation {
-    condition     = contains(["s-1vcpu-2gb", "s-2vcpu-2gb", "s-2vcpu-4gb", "g-2vcpu-8gb"], var.size)
-    error_message = "Invalid Droplet size. Must be one of: basic-xs, basic-s, basic-m, basic-l"
+    condition     = contains(["s-1vcpu-2gb", "s-2vcpu-2gb", "s-2vcpu-4gb", "s-2vcpu-8gb", "g-2vcpu-8gb"], var.size)
+    error_message = "Invalid Droplet size. Must be one of: s-1vcpu-2gb, s-2vcpu-2gb, s-2vcpu-4gb, s-2vcpu-8gb, g-2vcpu-8gb"
   }
 }
 
