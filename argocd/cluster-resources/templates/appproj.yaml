@@ -1,3 +1,4 @@
+---
 # https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/project.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
@@ -15,4 +16,3 @@ spec:
   clusterResourceWhitelist:
     - group: '*'
       kind: '*'
-      version: '*'
