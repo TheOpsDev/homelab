@@ -7,7 +7,7 @@ module "k3s-controlplane" {
   source = "../tofu-modules/do-droplet"
 
   name         = "k3s-control-1"
-  size         = "s-2vcpu-8gb"
+  size         = "g-2vcpu-8gb"
   storage_size = 25 # GB
 
   vpc_id = digitalocean_vpc.homelab.id
