@@ -19,7 +19,7 @@ clusterResources:
     namespace: nginx
     branch: main
   prom-operator:
-    enabled: false
+    enabled: true
     namespace: prometheus
     branch: main
   cert-manager:
@@ -31,6 +31,6 @@ clusterResources:
     namespace: pihole
     branch: main
   traefik:
-    enabled: false
+    enabled: true
     namespace: traefik
     branch: main
