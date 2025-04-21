@@ -1,3 +1,4 @@
+---
 apiVersion: v2
 name: cluster-resources
 description: Core Cluster Applications required for functionality

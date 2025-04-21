@@ -4,13 +4,25 @@ argo-cd:
     domain: argocd.do.theops.dev
   config:
     params:
-    # https://github.com/argoproj/argo-cd/issues/2953
+      # https://github.com/argoproj/argo-cd/issues/2953
       server.insecure: true
   server:
     extraArgs:
       - --insecure
-    ingress:
-      enabled: true
-      ingressClassName: "nginx"
-      annotations:
-        cert-manager.io/cluster-issuer: "letsencrypt"
+
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 50m
+        memory: 64Mi
+
+    pdb:
+      enabled: false
+      minAvailable: 1
+
+    metrics:
+      enabled: false
+      serviceMonitor:
+        enabled: false
