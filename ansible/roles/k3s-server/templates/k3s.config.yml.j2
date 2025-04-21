@@ -1,3 +1,8 @@
 cluster-init: true
 write-kubeconfig-mode: "0644"
 disable: [ "traefik", "servicelb" ]
+tls-san:
+  - "k3s.do.theops.dev"
+  - "{{ ansible_host }}"
+  - "{{ ansible_fqdn }}"
+  - "{{ ansible_default_ipv4.address }}"
