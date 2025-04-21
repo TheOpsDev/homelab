@@ -1,3 +1,4 @@
+---
 targetCluster:
   name: https://kubernetes.default.svc
 clusterResources:
@@ -6,7 +7,7 @@ clusterResources:
     namespace: argo
     branch: main
   k8s-dashboard:
-    enabled: true
+    enabled: false
     namespace: k8s-dashboard
     branch: main
   metallb:
@@ -18,7 +19,7 @@ clusterResources:
     namespace: nginx
     branch: main
   prom-operator:
-    enabled: true
+    enabled: false
     namespace: prometheus
     branch: main
   cert-manager:
@@ -30,6 +31,6 @@ clusterResources:
     namespace: pihole
     branch: main
   traefik:
-    enabled: true
+    enabled: false
     namespace: traefik
     branch: main
