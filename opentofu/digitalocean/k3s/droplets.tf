@@ -4,7 +4,7 @@ locals {
 
 # Control Plane
 module "k3s-controlplane" {
-  source = "../tofu-modules/do-droplet"
+  source = "../../tofu-modules/do-droplet"
 
   name         = "k3s-control-1"
   size         = "g-2vcpu-8gb"

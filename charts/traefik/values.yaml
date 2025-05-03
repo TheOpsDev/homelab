@@ -1,4 +1,8 @@
 traefik:
+  service:
+    enabled: true
+    spec:
+      loadBalancerIP: "134.199.185.242"
   podDisruptionBudget:
     enabled: true
     minAvailable: 1
