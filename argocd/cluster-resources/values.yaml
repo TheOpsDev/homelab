@@ -23,7 +23,7 @@ clusterResources:
     namespace: prometheus
     branch: main
   cert-manager:
-    enabled: false
+    enabled: true
     namespace: cert-manager
     branch: main
   pihole:
